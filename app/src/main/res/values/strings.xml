@@ -1,0 +1,109 @@
+<resources>
+
+    <!-- General values -->
+    <string name="app_name">Ice Hockey for Dummies</string>
+
+
+    <!-- Menu values -->
+    <string name="gamecenter">Game Center</string>
+    <string name="nationalleague">National League</string>
+    <string name="swissleague">Swiss League</string>
+    <string name="mysportsleague">MySports League</string>
+    <string name="regioleague">Regio League / Elite</string>
+    <string name="clubs">Clubs</string>
+    <string name="settings">Settings</string>
+
+
+    <!-- Menu icon values -->
+    <string name="navigation_open">Open navigation drawer</string>
+    <string name="navigation_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!-- settings -->
+    <string name="about">About</string>
+    <string name="language">Language</string>
+
+
+    <!-- ChildFragments titles -->
+    <string name="classement">CLASSEMENT</string>
+    <string name="leaders">LEADERS</string>
+    <string name="nlsl">NL &amp; SL</string>
+    <string name="mysportsregio">MYSPORTS &amp; REGIO LEAGUE</string>
+
+
+    <!-- about activity -->
+    <string name="about_title">About</string>
+    <string name="about_whatQ">What does the app do</string>
+    <string name="about_whatA">Show the Hockey Leagues, Clubs and Players in Valais</string>
+    <string name="about_uniqueQ">What is unique about this app</string>
+    <string name="about_uniqueA">Find all the information easily in a few clicks</string>
+    <string name="about_technicQ">Technical Information</string>
+    <string name="about_technicCompatible">Compatible : Nexus 4 API 28 </string>
+    <string name="about_technicFormat">Format : 4.7,168x1280,xhdpi (Nexus 4) </string>
+    <string name="about_technicDate">Date of establishment : 27.10.2018 </string>
+    <string name="about_technicAuthors">Authors : Montaine Burger and Nadine Waelti </string>
+    <string name="title_activity_club">ClubActivity</string>
+    <string name="title_activity_exa_club">ExaClubActivity</string>
+    <string name="title_activity_exa_club_page">ExaClubPageActivity</string>
+    <string name="français">Français</string>
+    <string name="anglais">Anglais</string>
+    <string name="change_language">Changer la langue</string>
+    <string name="leagues">Leagues</string>
+    <string name="players">Players</string>
+    <string name="home">home</string>
+    <string name="ADD">ADD</string>
+    <string name="EDIT">EDIT</string>
+    <string name="DELETE">DELETE</string>
+    <string name="number">#</string>
+    <string name="position">Position</string>
+    <string name="Points">Points</string>
+    <string name="delete">DELETE</string>
+    <string name="edit">EDIT</string>
+    <string name="Player">Player #</string>
+    <string name="Firstname">Firstname</string>
+    <string name="fn">Firstname :</string>
+    <string name="ln">Lastname :</string>
+    <string name="bd">Birthday :</string>
+    <string name="ps">Position :</string>
+    <string name="pts">Points :</string>
+    <string name="impressum">impressum</string>
+    <string name="disclaimer">disclaimer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="firebase">Firebase</string>
+    <string name="ResetFirebaseDatabase">Reset Firebase Database</string>
+    <string name="FBclubs">Clubs Firebase</string>
+    <string name="add_club">Add a club</string>
+    <string name="nameLeague">Name of the league</string>
+    <string name="save">SAVE</string>
+    <string name="modify">Change the name of the club :</string>
+    <string name="modifyleague">Change the name of the league</string>
+    <string name="leaguesFB">Leagues Firebase</string>
+    <string name="deleteFBDB">DELETE ALL DATAS</string>
+    <string name="createDB">CREATE DATABASE</string>
+    <string name="modifie">the database has been successfully modified</string>
+    <string name="leaguetomodifie">Name of the league you want to edit :</string>
+    <string name="newleaguename">New name</string>
+    <string name="mod">Modify this league</string>
+    <string name="nn">New name :</string>
+    <string name="Typeadd">Type the name of the new league</string>
+    <string name="typemodif">Type the name you want to edit</string>
+    <string name="ed">Type the correct name</string>
+    <string name="nm">Current name</string>
+    <string name="bef">Before</string>
+    <string name="af">After</string>
+    <string name="myLeagues">HC Leagues in Valais</string>
+    <string name="lea">Hockey Leagues</string>
+    <string name="hc">Hockey Clubs</string>
+    <string name="db">Firebase DB modified</string>
+    <string name="auth">Author : Nadine Waelti</string>
+    <string name="esta">Date of establishment : 24.12.2018</string>
+    <string name="comp">Compatible : Nexus 5X API 28</string>
+    <string name="format">5.2, 1080x1920, 420dpi (Nexus 5X)</string>
+    <string name="ft">Format : 5.2, 1080 x 1920, 420dpi (Nexus 5X)</string>
+    <string name="changelangue">Change language</string>
+</resources>

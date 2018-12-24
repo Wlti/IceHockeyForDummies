@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/About"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fond"
+    tools:context="com.example.icehockeyfordummies.user_interface.AboutActivity">
+
+
+    <ImageView
+        android:id="@+id/imageAbout"
+        android:layout_width="match_parent"
+        android:layout_height="263dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@drawable/img"
+        app:srcCompat="@drawable/img"
+        tools:srcCompat="@drawable/img" />
+
+    <TextView
+        android:id="@+id/app_title"
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/app_what"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="286dp"
+        android:contentDescription="@string/app_name"
+        android:ems="10"
+        android:text="@string/app_name"
+        android:textColor="#ff0000"
+        android:textSize="30sp"
+        tools:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/app_what"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/description_what"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/about_whatQ"
+        android:textColor="#ff0000"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/description_what"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_alignStart="@+id/description_technique"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginBottom="177dp"
+        android:text="@string/about_whatA"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/app_technique"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageAbout"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginBottom="141dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/about_technicQ"
+        android:textColor="#ff0000"
+        android:textSize="18sp"
+        tools:text="@string/about_technicQ" />
+
+    <TextView
+        android:id="@+id/description_technique"
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginBottom="110dp"
+        android:contentDescription="@string/comp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="@string/comp"
+        android:textSize="14sp"
+        tools:text="@string/comp" />
+
+    <TextView
+        android:id="@+id/format"
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/description_technique"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="83dp"
+        android:text="@string/ft"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/auteurs"
+        android:layout_width="332dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/description_technique"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="54dp"
+        android:text="@string/auth" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="329dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginBottom="29dp"
+        android:text="@string/esta" />
+
+</RelativeLayout>

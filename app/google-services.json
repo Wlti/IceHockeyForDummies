@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "216681816529",
+    "firebase_url": "https://past-80bb1.firebaseio.com",
+    "project_id": "past-80bb1",
+    "storage_bucket": "past-80bb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:216681816529:android:77ad55c6a2fe9239",
+        "android_client_info": {
+          "package_name": "com.example.icehockeyfordummies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "216681816529-u24tjtob5bao8akf0nvk4c586dvmp9cm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.icehockeyfordummies",
+            "certificate_hash": "e77e65ced1226dcd81a994d807c433b8fe6b5550"
+          }
+        },
+        {
+          "client_id": "216681816529-m0ts3lng7htpeg8uqttm1094a8vacg9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3KuLdnE_W-kwcBrFMj-WavLa1AgKEjjg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "216681816529-m0ts3lng7htpeg8uqttm1094a8vacg9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
