@@ -106,4 +106,6 @@
     <string name="format">5.2, 1080x1920, 420dpi (Nexus 5X)</string>
     <string name="ft">Format : 5.2, 1080 x 1920, 420dpi (Nexus 5X)</string>
     <string name="changelangue">Change language</string>
+    <string name="enter_new_name">Enter new name</string>
+    <string name="close">CLOSE</string>
 </resources>

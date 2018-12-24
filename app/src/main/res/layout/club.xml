@@ -111,5 +111,15 @@
         android:textColor="@android:color/black"
         android:textSize="30sp" />
 
+    <TextView
+        android:id="@+id/fromLeague"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="77dp"
+        android:text="TextView" />
+
 
 </RelativeLayout>

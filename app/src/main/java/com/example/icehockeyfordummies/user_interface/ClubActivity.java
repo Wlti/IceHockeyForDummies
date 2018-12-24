@@ -16,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.icehockeyfordummies.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +36,10 @@ public class ClubActivity extends AppCompatActivity {
     Button btnEdit;
     EditText editThisClub;
     EditText newClub;
+    TextView fromLeague;
+
+    //pour tester si un club du même nom existe déjà
+    boolean exist;
 
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference rootRef = db.getReference();
@@ -60,6 +66,8 @@ public class ClubActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.btn_update_club);
         editThisClub = findViewById(R.id.edit_club);
         newClub = findViewById(R.id.edit_club2);
+        fromLeague = findViewById(R.id.fromLeague);
+        fromLeague.setText(name);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, clubsArrayList);
         listClub.setAdapter(arrayAdapter);
 
@@ -68,13 +76,36 @@ public class ClubActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String clubToAdd = addClub.getText().toString();
-                if(!clubToAdd.equals(""))
-                {
-                    clubsRef.push().setValue(clubToAdd);
-                    addClub.setText("");
-                    InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
+
+                //Tester s'il n'existe pas déjà un club avec ce nom
+                rootRef.child("clubs").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        exist = false;
+                        for (int i = 0; i < keys.size(); i++) {
+                            String value="";
+                            value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                            if (value.equals(clubToAdd)) {
+                                exist=true;
+                            }}
+                        if(!exist){
+
+                                if(!clubToAdd.equals(""))
+                                {
+                                    clubsRef.push().setValue(clubToAdd);
+                                    addClub.setText("");
+                                    InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                }
+
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
+
             }
         });
 
@@ -84,15 +115,26 @@ public class ClubActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String clubToUpdate = editThisClub.getText().toString();
                 String nc = newClub.getText().toString();
+
                 if(!clubToUpdate.equals("")&& !nc.equals("")) {
                     rootRef.child("clubs").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            //Tester si un club du même nom existe déjà
+                            exist = false;
                             for (int i = 0; i < keys.size(); i++) {
-                                String value = "";
+                                String value="";
                                 value = dataSnapshot.child(keys.get(i)).getValue().toString();
-                                if (value.equals(clubToUpdate)) {
-                                    rootRef.child("clubs").child(name).child(keys.get(i)).setValue(nc);
+                                if (value.equals(nc)) {
+                                    exist=true;
+                                }}
+                            if(!exist){
+                                for (int i = 0; i < keys.size(); i++) {
+                                    String value = "";
+                                    value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                                    if (value.equals(clubToUpdate)) {
+                                        rootRef.child("clubs").child(name).child(keys.get(i)).setValue(nc);
+                                    }
                                 }
                             }
                         }
@@ -108,7 +150,11 @@ public class ClubActivity extends AppCompatActivity {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                             values = new ArrayList<String>();
+                            if(!exist){
+
+
                             if (dataSnapshot.child(name).child(clubToUpdate).exists()) {
                                 Iterable<DataSnapshot> snap = dataSnapshot.child(name).child(clubToUpdate).getChildren();
 
@@ -128,7 +174,7 @@ public class ClubActivity extends AppCompatActivity {
                                     playersRef.child(name).child(nc).push().setValue(values.get(j));
                                 }
                             }
-                        }
+                        }}
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {

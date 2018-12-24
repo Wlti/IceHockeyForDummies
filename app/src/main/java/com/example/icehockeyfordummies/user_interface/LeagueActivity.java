@@ -35,6 +35,8 @@ public class LeagueActivity extends AppCompatActivity {
     EditText newleague;
     ListView listLeague;
 
+    //test si une league existe déjà
+    boolean exist;
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference rootRef = db.getReference();
     DatabaseReference leaguesRef = rootRef.child("leagues");
@@ -70,16 +72,35 @@ public class LeagueActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String leagueToAdd = addLeague.getText().toString();
-                if(!leagueToAdd.equals(""))
-                {
-                    leaguesRef.push().setValue(leagueToAdd);
-                    addLeague.setText("");
 
-                   InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-                   imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
+                //Tester s'il n'existe pas déjà une league avec ce nom
+                rootRef.child("leagues").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        boolean exist = false;
+                        for (int i = 0; i < keys.size(); i++) {
+                            String value="";
+                            value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                            if (value.equals(leagueToAdd)) {
+                                exist=true;
+                            }}
+                    if(!exist){
+                        if(!leagueToAdd.equals(""))
+                        {
+                            leaguesRef.push().setValue(leagueToAdd);
+                            addLeague.setText("");
+
+                            InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        }
+                    }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
             }
         });
 
@@ -88,35 +109,53 @@ public class LeagueActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //récupération des données
                 String leagueToUpdate = editThisLeague.getText().toString();
                 String nl = newleague.getText().toString();
+
+                //Test si les deux cases sont bien remplies
                 if(!leagueToUpdate.equals("")&& !nl.equals("")){
-                    rootRef.child("leagues").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (int i = 0; i < keys.size(); i++) {
-                                String value="";
-                                value = dataSnapshot.child(keys.get(i)).getValue().toString();
-                                if (value.equals(leagueToUpdate)) {
-                                    rootRef.child("leagues").child(keys.get(i)).setValue(nl);
-                                }}}
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                            }
-                    });
+
+                //Tester s'il n'existe pas déjà une league avec ce nom
+                rootRef.child("leagues").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        exist = false;
+                        for (int i = 0; i < keys.size(); i++) {
+                            String value="";
+                            value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                            if (value.equals(nl)) {
+                                exist=true;
+                            }}
+                        if(!exist){
+                            //Si elle n'existe pas déjà, la créer
+                                for (int i = 0; i < keys.size(); i++) {
+                                    String value="";
+                                    value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                                    if (value.equals(leagueToUpdate)) {
+                                        rootRef.child("leagues").child(keys.get(i)).setValue(nl);
+                                    }}
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
 
                     //Update clubs
                     clubsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(!exist){
                             if(dataSnapshot.child(leagueToUpdate).exists()) {
                                 Iterable<DataSnapshot> snap = dataSnapshot.child(leagueToUpdate).getChildren();
 
 
                                 //Remove
-                                if (dataSnapshot.child(leagueToUpdate).exists()) {
                                     clubsRef.child(leagueToUpdate).removeValue();
-                                }
+
 
                                 //Récupérer les données
                                 for (DataSnapshot ds : snap) {
@@ -129,7 +168,7 @@ public class LeagueActivity extends AppCompatActivity {
                                     clubsRef.child(nl).push().setValue(values.get(j));
                                 }
                             }
-                        }
+                        }}
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
@@ -140,28 +179,29 @@ public class LeagueActivity extends AppCompatActivity {
                         ArrayList<String > val;
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (int i =0;i<values.size();i++){
-                                val = new ArrayList<String >();
-                                if(dataSnapshot.child(leagueToUpdate).child(values.get(i)).exists()) {
-                                    Iterable<DataSnapshot> snap = dataSnapshot.child(leagueToUpdate).child(values.get(i)).getChildren();
+                                if (!exist) {
+                                    for (int i = 0; i < values.size(); i++) {
+                                        val = new ArrayList<String>();
+                                        if (dataSnapshot.child(leagueToUpdate).child(values.get(i)).exists()) {
+                                            Iterable<DataSnapshot> snap = dataSnapshot.child(leagueToUpdate).child(values.get(i)).getChildren();
 
-                                    //Remove
-                                        playersRef.child(leagueToUpdate).removeValue();
+                                            //Remove
+                                            playersRef.child(leagueToUpdate).removeValue();
 
 
-                                    //Récupérer les données
-                                    for (DataSnapshot ds : snap) {
-                                        String c = ds.getValue(String.class);
-                                        val.add(c);
-                                    }
+                                            //Récupérer les données
+                                            for (DataSnapshot ds : snap) {
+                                                String c = ds.getValue(String.class);
+                                                val.add(c);
+                                            }
 
-                                    //Push.set
-                                    for (int j = 0; j < val.size(); j++) {
-                                        playersRef.child(nl).child(values.get(i)).push().setValue(val.get(j));
+                                            //Push.set
+                                            for (int j = 0; j < val.size(); j++) {
+                                                playersRef.child(nl).child(values.get(i)).push().setValue(val.get(j));
+                                            }
+                                        }
                                     }
                                 }
-                            }
-
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {

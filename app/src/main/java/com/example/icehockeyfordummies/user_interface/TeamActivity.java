@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.icehockeyfordummies.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +26,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 //Show the list of players of a club of a league
@@ -32,9 +38,11 @@ public class TeamActivity extends AppCompatActivity {
     ListView listPlayers;
     String name;
     String nameLeague;
-    Button btnEdit;
-    EditText editThisPlayer;
-    EditText newPlayer;
+    TextView fromL;
+    TextView fromC;
+
+    //Tester si un player avec ce nom existe déjà
+    boolean exist;
 
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference rootRef = db.getReference();
@@ -53,24 +61,45 @@ public class TeamActivity extends AppCompatActivity {
         addPlayer = findViewById(R.id.add_player);
         listPlayers = findViewById(R.id.list_view_player);
         btnAdd = findViewById(R.id.btn_add_player);
-        btnEdit = findViewById(R.id.btn_update_player);
-        editThisPlayer = findViewById(R.id.edit_player);
-        newPlayer = findViewById(R.id.edit_player2);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, playersArrayList);
         listPlayers.setAdapter(arrayAdapter);
+
+        //Titre
+        fromC = findViewById(R.id.fromC);
+        fromL = findViewById(R.id.fromL);
+        fromC.setText(name);
+        fromL.setText(nameLeague);
 
         //Add a player
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String playerToAdd = addPlayer.getText().toString();
-                if(!playerToAdd.equals(""))
-                {
-                    clubsRef.push().setValue(playerToAdd);
-                    addPlayer.setText("");
-                    InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
+                //Tester s'il n'existe pas déjà un club avec ce nom
+                rootRef.child("players").child(nameLeague).child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        exist = false;
+                        for (int i = 0; i < keys.size(); i++) {
+                            String value="";
+                            value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                            if (value.equals(playerToAdd)) {
+                                exist=true;
+                            }}
+                        if(!exist){
+                            if(!playerToAdd.equals(""))
+                            {
+                                clubsRef.push().setValue(playerToAdd);
+                                addPlayer.setText("");
+                                InputMethodManager imm = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
             }
         });
 
@@ -106,30 +135,16 @@ public class TeamActivity extends AppCompatActivity {
             }
         });
 
-        //Edit a player
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        //Update a player
+        listPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                String playerToUpdate = editThisPlayer.getText().toString();
-                String np = newPlayer.getText().toString();
-                if(!playerToUpdate.equals("")&& !np.equals("")) {
-                    rootRef.child("players").child(nameLeague).child(name).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (int i = 0; i < keys.size(); i++) {
-                                String value = "";
-                                value = dataSnapshot.child(keys.get(i)).getValue().toString();
-                                if (value.equals(playerToUpdate)) {
-                                    rootRef.child("players").child(nameLeague).child(name).child(keys.get(i)).setValue(np);
-                                }
-                            }
-                        }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String playerToUpdate = listPlayers.getItemAtPosition(position).toString();
+                updatePlayer(playerToUpdate);
+            }
+        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
-                }}});
+
 
 
         //Modify the lists
@@ -167,6 +182,63 @@ public class TeamActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void updatePlayer (String n){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dial = inflater.inflate(R.layout.update,null);
+        dialog.setView(dial);
+        final EditText newPlayer = (EditText) dial.findViewById(R.id.editText);
+        final Button button = (Button) dial.findViewById(R.id.button2);
+        dialog.setTitle("Update the player "+n);
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+
+        //Edit a player
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String playerToUpdate = n;
+
+                String np = newPlayer.getText().toString();
+                if(!playerToUpdate.equals("")&& !np.equals("")) {
+                    rootRef.child("players").child(nameLeague).child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            //Tester s'il existe un autre joueur avec ce nom
+                            boolean exist = false;
+                            for (int i = 0; i < keys.size(); i++) {
+                                String value="";
+                                value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                                if (value.equals(np)) {
+                                    exist=true;
+                                }}
+                            if(!exist){
+                                for (int i = 0; i < keys.size(); i++) {
+                                    String value = "";
+                                    value = dataSnapshot.child(keys.get(i)).getValue().toString();
+                                    if (value.equals(playerToUpdate)) {
+                                        rootRef.child("players").child(nameLeague).child(name).child(keys.get(i)).setValue(np);
+                                    }
+                                }
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                }
+                alertDialog.dismiss();
+            }});
+
+
+
+    }
+
 
     //Menu
     @Override

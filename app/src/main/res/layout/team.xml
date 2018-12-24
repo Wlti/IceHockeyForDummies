@@ -15,7 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="364dp"
+        android:layout_marginTop="507dp"
         android:hint="@string/newleaguename"
         android:inputType="text"
         android:textAlignment="center"
@@ -30,6 +30,7 @@
         android:layout_below="@+id/add_player"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         android:backgroundTint="#ffffff"
         android:gravity="center"
         android:paddingLeft="12dp"
@@ -40,76 +41,45 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/edit_player"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="468dp"
-        android:hint="@string/bef"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearance"
-        android:textColor="@android:color/black"
-        android:textSize="18sp" />
-
-    <EditText
-        android:id="@+id/edit_player2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/add_player"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="510dp"
-        android:hint="@string/af"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearance"
-        android:textColor="@android:color/black"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/btn_update_player"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_player2"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="2dp"
-        android:backgroundTint="#ffffff"
-        android:gravity="center"
-        android:paddingLeft="12dp"
-        android:paddingTop="2dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="2dp"
-        android:text="@string/EDIT"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="18sp" />
-
     <ListView
         android:id="@+id/list_view_player"
         android:layout_width="match_parent"
-        android:layout_height="245dp"
+        android:layout_height="423dp"
         android:layout_alignTop="@+id/btn_add_player"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="-323dp"
-        android:layout_marginBottom="271dp"
+        android:layout_marginTop="-474dp"
+        android:layout_marginBottom="102dp"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btn_update_player"
         android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="24dp"
         android:text="@string/players"
         android:textColor="@android:color/black"
         android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/fromL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="143dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/fromC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/fromL"
+        android:layout_alignBottom="@+id/textView3"
+        android:text="TextView" />
 
 
 </RelativeLayout>
